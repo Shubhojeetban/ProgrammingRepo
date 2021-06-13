@@ -13,25 +13,27 @@ import java.util.Arrays;
  * @author ACER
  */
 public class CycleDetectonDFS {
-    private boolean isCyclic(int node, int prev, boolean[] vis, ArrayList<ArrayList<Integer>> adj){
+     private boolean Cycle(ArrayList<ArrayList<Integer>> adj, boolean[] vis, int node, int parent)
+    {
         vis[node] = true;
         for(Integer it : adj.get(node)){
             if(!vis[it]){
-                isCyclic(it, node, vis, adj);
+                if(Cycle(adj, vis, it, node)== true) return true;
             }
-            else if(it != prev){
+            else if(it != parent){
                 return true;
             }
         }
         return false;
     }
+    //Function to detect cycle in an undirected graph.
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj)
     {
+        // Code here
         boolean[] vis = new boolean[V+1];
-        Arrays.fill(vis, false);
-        for(int i = 0; i < V; i++){
+        for(int i =0; i < V; i++){
             if(!vis[i]){
-                if(isCyclic(i, -1, vis, adj)){
+                if(Cycle(adj, vis, i, -1)){
                     return true;
                 }
             }
